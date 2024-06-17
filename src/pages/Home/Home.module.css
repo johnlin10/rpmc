@@ -1,0 +1,1 @@
+.serverStatus{display:flex;flex-direction:column;align-items:center;width:100%}.serverStatus>h1{font-size:3rem}.serverStatus>h2.onlineStatus{padding:6px 9px;color:#fff}.serverStatus>h2.onlineStatus.online{background:#69ca2c}.serverStatus>h2.onlineStatus.offline{background:#c1c1c1}.serverStatus>pre{max-width:100%;border:1px solid #ccc;overflow:auto}

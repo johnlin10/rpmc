@@ -1,0 +1,17 @@
+.App {
+  height: 100%;
+  width: 100%;
+
+  > main {
+    height: 100%;
+    width: 100%;
+    padding-top: 88px;
+    overflow-y: auto;
+
+    > .view {
+      width: 100%;
+      padding: 24px;
+      padding-top: 54 + 24px;
+    }
+  }
+}
