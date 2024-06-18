@@ -1,1 +1,1 @@
-.App{height:100%;width:100%}.App>main{height:100%;width:100%;padding-top:88px;overflow-y:auto}.App>main>.view{width:100%;padding:24px;padding-top:78px}
+.App{height:100%;width:100%}.App>main{height:100%;width:100%;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth}.App>main>.view{width:100%}

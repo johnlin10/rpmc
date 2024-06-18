@@ -12,7 +12,7 @@ function App() {
   return (
     <TooltipProvider>
       <div className="App">
-        <Nav />
+        {/* <Nav /> */}
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
