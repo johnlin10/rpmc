@@ -17,25 +17,29 @@ const MinecraftServerStatus = () => {
   const [error, setError] = useState(null)
 
   const mcServer = process.env.REACT_APP_MINECRAFT_SERVER_IP
-  const testServer = 'mcFallout.net'
 
-  // ${process.env.REACT_APP_MINECRAFT_SERVER_IP}
+  // 使用 useEffect Hook 來獲取伺服器狀態
   useEffect(() => {
+    // 定義一個異步函數以獲取伺服器狀態
     const fetchServerStatus = async () => {
       try {
+        // 從伺服器 API 獲取狀態
         const response = await axios.get(
-          `https://api.mcstatus.io/v2/status/java/${mcServer}`
+          `https://api.mcstatus.io/v2/status/java/${mcServer}` // 替換為 Minecraft 伺服器地址
         )
-        console.log(response.data)
-        setServerStatus(response.data)
+        console.log(response.data) // 將伺服器回應的資料輸出到控制台
+        setServerStatus(response.data) // 設定伺服器狀態
       } catch (err) {
-        setError(err.message)
+        setError(err.message) // 如果出錯，設定錯誤訊息
       }
     }
 
+    // 初次執行一次獲取伺服器狀態
     fetchServerStatus()
+    // 每隔 30 秒定期獲取伺服器狀態
     const interval = setInterval(fetchServerStatus, 30000)
 
+    // 清除定時器，避免記憶體洩漏
     return () => clearInterval(interval)
   }, [])
 
@@ -133,14 +137,20 @@ const MinecraftServerStatus = () => {
 const CopyButton = ({ content }) => {
   const { showTooltip } = useTooltip()
 
+  /**
+   * 將內容複製到剪貼簿的函式
+   */
   const copyToClipboard = () => {
+    // 使用 navigator.clipboard API 將內容寫入剪貼簿
     navigator.clipboard
-      .writeText(content)
+      .writeText(content) // 將變數 content 的值寫入剪貼簿
       .then(() => {
-        showTooltip('Copied to clipboard!')
+        // 如果成功，顯示提示訊息
+        showTooltip('Copied to clipboard!') // 顯示 "Copied to clipboard!" 的提示訊息
       })
       .catch((err) => {
-        console.error('Failed to copy content: ', err)
+        // 如果失敗，輸出錯誤訊息
+        console.error('Failed to copy content: ', err) // 在控制台顯示錯誤訊息和錯誤對象
       })
   }
 
