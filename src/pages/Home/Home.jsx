@@ -7,7 +7,44 @@ import Button from '../../widgets/Button.jsx/Button'
 export default function Home() {
   return (
     <div className="view">
+      <div className={style.intro}>
+        <div className={style.logo}>
+          <img
+            className={style.block}
+            src="/images/icon/block/RPMC_icon_block_256x256.png"
+            alt="RPMC server block icon"
+          ></img>
+          <img
+            className={style.text}
+            src="/images/icon/text/RPMC_icon_text_h256.png"
+            alt="RPMC server text icon"
+          />
+        </div>
+        <div className={style.about}>
+          <p>
+            A Minecraft server <br />
+            runing on a Raspberry Pi.
+          </p>
+          {/* <Button
+            options={{
+              text: 'Hello',
+              size: 'small',
+              action: () => {},
+            }}
+          /> */}
+        </div>
+      </div>
+      <FeatureView />
+      {/* <MinecraftServerStatus /> */}
+    </div>
+  )
+}
+
+const FeatureView = () => {
+  return (
+    <div className={style.featureView}>
       <MinecraftServerStatus />
+      <AboutView />
     </div>
   )
 }
@@ -45,33 +82,6 @@ const MinecraftServerStatus = () => {
 
   return (
     <>
-      <div className={style.intro}>
-        <div className={style.logo}>
-          <img
-            className={style.block}
-            src="/images/icon/block/RPMC_icon_block_256x256.png"
-            alt="RPMC server block icon"
-          ></img>
-          <img
-            className={style.text}
-            src="/images/icon/text/RPMC_icon_text_h256.png"
-            alt="RPMC server text icon"
-          />
-        </div>
-        <div className={style.about}>
-          <p>
-            A Minecraft server <br />
-            runing on a Raspberry Pi.
-          </p>
-          {/* <Button
-            options={{
-              text: 'Hello',
-              size: 'small',
-              action: () => {},
-            }}
-          /> */}
-        </div>
-      </div>
       <div className={style.serverStatus}>
         <div className={style.header}>
           <h1>Status </h1>
@@ -131,6 +141,32 @@ const MinecraftServerStatus = () => {
         )}
       </div>
     </>
+  )
+}
+
+const AboutView = () => {
+  return (
+    <div className={style.aboutView}>
+      <div className={style.header}>
+        <h1>About</h1>
+      </div>
+      <div className={style.links}>
+        <p>
+          This is a Minecraft Java Edition server built by one person, where the
+          RPMC world retains as much of the original survival fun as possible.
+        </p>
+        <ul>
+          <li>
+            <p>World Rules</p>
+            <span class="material-symbols-outlined">arrow_outward</span>
+          </li>
+          <li>
+            <p>Construction methods</p>
+            <span class="material-symbols-outlined">arrow_outward</span>
+          </li>
+        </ul>
+      </div>
+    </div>
   )
 }
 
