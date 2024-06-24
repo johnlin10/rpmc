@@ -52,6 +52,7 @@ const FeatureView = () => {
 const MinecraftServerStatus = () => {
   const [serverStatus, setServerStatus] = useState(null)
   const [error, setError] = useState(null)
+  const [loadingLamp, setLoadingLamp] = useState('off')
 
   const mcServer = process.env.REACT_APP_MINECRAFT_SERVER_IP
 
@@ -80,34 +81,53 @@ const MinecraftServerStatus = () => {
     return () => clearInterval(interval)
   }, [])
 
+  useEffect(() => {
+    if (!serverStatus) {
+      const intervalId = setInterval(() => {
+        setLoadingLamp((prev) => (prev === 'on' ? 'off' : 'on'))
+      }, 700)
+
+      return () => clearInterval(intervalId) // 清除interval以防止memory leak
+    }
+  }, [serverStatus])
+
   return (
     <>
       <div className={style.serverStatus}>
         <div className={style.header}>
-          <h1>Status </h1>
-          {serverStatus && (
-            <div
-              className={`${style.onlineStatus} ${
-                serverStatus.online ? style.online : style.offline
+          <h1>Status</h1>
+          <div
+            className={`${style.onlineStatus} ${
+              serverStatus && serverStatus.online ? style.online : style.offline
+            }`}
+          >
+            <h2
+              className={`${
+                serverStatus && serverStatus.online
+                  ? style.online
+                  : style.offline
               }`}
             >
-              <h2
-                className={`${
-                  serverStatus.online ? style.online : style.offline
-                }`}
-              >
-                {serverStatus.online ? 'Online' : 'Offline'}
-              </h2>
-              <img
-                src={`/images/mc_block/redstone/redstone_lamp_${
-                  serverStatus.online ? 'on' : 'off'
-                }.png`}
-                alt=""
-              />
-            </div>
-          )}
+              {serverStatus
+                ? serverStatus.online
+                  ? 'Online'
+                  : 'Offline'
+                : 'Loading'}
+              {}
+            </h2>
+            <img
+              src={`/images/mc_block/redstone/redstone_lamp_${
+                serverStatus
+                  ? serverStatus.online
+                    ? 'on'
+                    : 'off'
+                  : loadingLamp
+              }.png`}
+              alt=""
+            />
+          </div>
         </div>
-        {serverStatus ? (
+        {serverStatus && (
           <>
             {serverStatus.online && (
               <div className={style.serverInfo}>
@@ -136,8 +156,6 @@ const MinecraftServerStatus = () => {
               </div>
             )}
           </>
-        ) : (
-          <p>Loading...</p>
         )}
       </div>
     </>
