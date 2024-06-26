@@ -81,13 +81,14 @@ const MinecraftServerStatus = () => {
     return () => clearInterval(interval)
   }, [])
 
+  // 切換 Loading 的紅石燈閃爍狀態
   useEffect(() => {
     if (!serverStatus) {
       const intervalId = setInterval(() => {
         setLoadingLamp((prev) => (prev === 'on' ? 'off' : 'on'))
       }, 700)
 
-      return () => clearInterval(intervalId) // 清除interval以防止memory leak
+      return () => clearInterval(intervalId)
     }
   }, [serverStatus])
 
@@ -170,8 +171,10 @@ const AboutView = () => {
       </div>
       <div className={style.links}>
         <p>
-          This is a Minecraft Java Edition server built by one person, where the
-          RPMC world retains as much of the original survival fun as possible.
+          This is a Minecraft Java Edition server built by an individual. RPMC
+          World is dedicated to preserving the original survival fun and
+          allowing players to experience the purest Minecraft survival
+          adventure.
         </p>
         <ul>
           <li>
