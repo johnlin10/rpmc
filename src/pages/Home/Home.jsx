@@ -177,13 +177,17 @@ const AboutView = () => {
           adventure.
         </p>
         <ul>
-          <li>
-            <p>World Rules</p>
+          <li onClick={() => window.open('http://147.185.221.20:33566')}>
+            <p>World Map</p>
             <span class="material-symbols-outlined">arrow_outward</span>
           </li>
-          <li>
+          <li className={style.disabled}>
+            <p>World Rules</p>
+            {/* <span class="material-symbols-outlined">arrow_outward</span> */}
+          </li>
+          <li className={style.disabled}>
             <p>Construction methods</p>
-            <span class="material-symbols-outlined">arrow_outward</span>
+            {/* <span class="material-symbols-outlined">arrow_outward</span> */}
           </li>
         </ul>
       </div>

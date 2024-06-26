@@ -202,17 +202,31 @@
           @include flex_center($justify: space-between, $align: center);
           padding: 6px 6px 6px 12px;
           background: var(--blue-800);
-          cursor: not-allowed;
+          cursor: pointer;
 
           &:not(:last-child) {
             margin-bottom: 6px;
           }
 
-          &:hover {
-            background: var(--blue-700);
+          &.disabled {
+            cursor: not-allowed;
+            opacity: 0.5;
 
             > p {
-              color: #ffffffe1;
+              color: #ffffff50;
+            }
+          }
+
+          &:not(.disabled) {
+            &:hover {
+              background: var(--blue-700);
+
+              > p {
+                color: #ffffffe1;
+              }
+              > span {
+                color: #ffffff5f;
+              }
             }
           }
 
@@ -222,6 +236,7 @@
 
           > span {
             color: #ffffff3f;
+            user-select: none;
           }
         }
       }
