@@ -7,6 +7,8 @@ import { TooltipProvider } from './Context/TooltipContext'
 
 import Home from './pages/Home/Home'
 import Nav from './widgets/Nav/Nav'
+import WorldRules from './pages/WorldRules/WorldRules'
+import WorldMap from './pages/WorldMap/WorldMap'
 
 function App() {
   return (
@@ -16,6 +18,8 @@ function App() {
         <main>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/rules" element={<WorldRules />} />
+            <Route path="/map" element={<WorldMap />} />
           </Routes>
         </main>
       </div>

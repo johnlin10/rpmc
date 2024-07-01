@@ -61,9 +61,21 @@
 
   > .serverStatus {
     @include flex($direction: column, $align: center);
+    position: relative;
     width: 100vw;
     background: var(--second-color);
     scroll-snap-align: center;
+
+    > .aboutArrow {
+      @include flex($direction: row, $align: center);
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      color: #fff;
+      user-select: none;
+      cursor: pointer;
+      opacity: 0.3;
+    }
 
     > .header {
       display: flex;

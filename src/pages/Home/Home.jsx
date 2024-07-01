@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import style from './Home.module.scss'
 import axios from 'axios'
 import { useTooltip } from '../../Context/TooltipContext'
@@ -25,30 +26,24 @@ export default function Home() {
             A Minecraft server <br />
             runing on a Raspberry Pi.
           </p>
-          {/* <Button
-            options={{
-              text: 'Hello',
-              size: 'small',
-              action: () => {},
-            }}
-          /> */}
         </div>
       </div>
       <FeatureView />
-      {/* <MinecraftServerStatus /> */}
     </div>
   )
 }
 
+// 功能操作版面
 const FeatureView = () => {
   return (
-    <div className={style.featureView}>
+    <div id="featureView" className={style.featureView}>
       <MinecraftServerStatus />
       <AboutView />
     </div>
   )
 }
 
+// RPMC 伺服器狀態
 const MinecraftServerStatus = () => {
   const [serverStatus, setServerStatus] = useState(null)
   const [error, setError] = useState(null)
@@ -63,12 +58,12 @@ const MinecraftServerStatus = () => {
       try {
         // 從伺服器 API 獲取狀態
         const response = await axios.get(
-          `https://api.mcstatus.io/v2/status/java/${mcServer}` // 替換為 Minecraft 伺服器地址
+          `https://api.mcstatus.io/v2/status/java/${mcServer}`
         )
-        console.log(response.data) // 將伺服器回應的資料輸出到控制台
-        setServerStatus(response.data) // 設定伺服器狀態
+        // console.log(response.data)
+        setServerStatus(response.data)
       } catch (err) {
-        setError(err.message) // 如果出錯，設定錯誤訊息
+        setError(err.message)
       }
     }
 
@@ -92,9 +87,21 @@ const MinecraftServerStatus = () => {
     }
   }, [serverStatus])
 
+  const scrollToAbout = () => {
+    const featureView = document.getElementById('featureView')
+    const aboutView = document.getElementById('about')
+    if (featureView && aboutView) {
+      const scrollLeft = aboutView.offsetLeft - featureView.offsetLeft
+      featureView.scrollTo({ left: scrollLeft, behavior: 'smooth' })
+    }
+  }
+
   return (
     <>
-      <div className={style.serverStatus}>
+      <div id="serverStatus" className={style.serverStatus}>
+        <span className={style.aboutArrow} onClick={scrollToAbout}>
+          About <span class={`material-symbols-outlined`}>double_arrow</span>
+        </span>
         <div className={style.header}>
           <h1>Status</h1>
           <div
@@ -163,9 +170,11 @@ const MinecraftServerStatus = () => {
   )
 }
 
+// 關於
 const AboutView = () => {
+  const navigate = useNavigate()
   return (
-    <div className={style.aboutView}>
+    <div id="about" className={style.aboutView}>
       <div className={style.header}>
         <h1>About</h1>
       </div>
@@ -177,13 +186,16 @@ const AboutView = () => {
           adventure.
         </p>
         <ul>
-          <li onClick={() => window.open('http://147.185.221.20:33566')}>
+          <li onClick={() => navigate('/map')}>
             <p>World Map</p>
-            <span class="material-symbols-outlined">arrow_outward</span>
+            <span class="material-symbols-outlined">arrow_forward</span>
           </li>
-          <li className={style.disabled}>
+          <li
+            className={style.disabled}
+            //onClick={() => navigate('/rules')}
+          >
             <p>World Rules</p>
-            {/* <span class="material-symbols-outlined">arrow_outward</span> */}
+            {/* <span class="material-symbols-outlined">arrow_forward</span> */}
           </li>
           <li className={style.disabled}>
             <p>Construction methods</p>
