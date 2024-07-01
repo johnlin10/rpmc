@@ -6,7 +6,13 @@ export default function WorldMap() {
       <div className={style.controller} onClick={() => window.history.back()}>
         <span class="material-symbols-outlined">arrow_back</span>
       </div>
-      <iframe src="http://147.185.221.20:33566" frameborder="0"></iframe>
+      <iframe
+        title="RPMC world map"
+        src="http://147.185.221.20:33566"
+        frameborder="0"
+        sandbox="allow-scripts allow-same-origin"
+        referrerpolicy="no-referrer"
+      ></iframe>
     </div>
   )
 }
