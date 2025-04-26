@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import style from './Home.module.scss'
 import axios from 'axios'
 import { useTooltip } from '../../Context/TooltipContext'
+import { useServer } from '../../Context/ServerContext'
 import Button from '../../widgets/Button.jsx/Button'
 
 export default function Home() {
@@ -45,47 +46,7 @@ const FeatureView = () => {
 
 // RPMC 伺服器狀態
 const MinecraftServerStatus = () => {
-  const [serverStatus, setServerStatus] = useState(null)
-  const [error, setError] = useState(null)
-  const [loadingLamp, setLoadingLamp] = useState('off')
-
-  const mcServer = process.env.REACT_APP_MINECRAFT_SERVER_IP
-
-  // 使用 useEffect Hook 來獲取伺服器狀態
-  useEffect(() => {
-    // 定義一個異步函數以獲取伺服器狀態
-    const fetchServerStatus = async () => {
-      try {
-        // 從伺服器 API 獲取狀態
-        const response = await axios.get(
-          `https://api.mcstatus.io/v2/status/java/${mcServer}`
-        )
-        // console.log(response.data)
-        setServerStatus(response.data)
-      } catch (err) {
-        setError(err.message)
-      }
-    }
-
-    // 初次執行一次獲取伺服器狀態
-    fetchServerStatus()
-    // 每隔 30 秒定期獲取伺服器狀態
-    const interval = setInterval(fetchServerStatus, 30000)
-
-    // 清除定時器，避免記憶體洩漏
-    return () => clearInterval(interval)
-  }, [])
-
-  // 切換 Loading 的紅石燈閃爍狀態
-  useEffect(() => {
-    if (!serverStatus) {
-      const intervalId = setInterval(() => {
-        setLoadingLamp((prev) => (prev === 'on' ? 'off' : 'on'))
-      }, 700)
-
-      return () => clearInterval(intervalId)
-    }
-  }, [serverStatus])
+  const { serverStatus, loadingLamp } = useServer()
 
   const scrollToAbout = () => {
     const featureView = document.getElementById('featureView')
@@ -172,7 +133,8 @@ const MinecraftServerStatus = () => {
 
 // 關於
 const AboutView = () => {
-  const navigate = useNavigate()
+  const { serverStatus } = useServer()
+
   return (
     <div id="about" className={style.aboutView}>
       <div className={style.header}>
@@ -186,20 +148,40 @@ const AboutView = () => {
           adventure.
         </p>
         <ul>
-          <li onClick={() => navigate('/map')}>
+          <li
+            className={!serverStatus && style.disabled}
+            onClick={() =>
+              window.open(
+                `http://${process.env.REACT_APP_MINECRAFT_SERVER_MAP}`,
+                '_blank'
+              )
+            }
+          >
             <p>World Map</p>
-            <span class="material-symbols-outlined">arrow_forward</span>
+            <span class="material-symbols-outlined">open_in_new</span>
           </li>
           <li
             className={style.disabled}
             //onClick={() => navigate('/rules')}
           >
-            <p>World Rules</p>
+            <p>World Rules (Coming Soon)</p>
             {/* <span class="material-symbols-outlined">arrow_forward</span> */}
           </li>
           <li className={style.disabled}>
-            <p>Construction methods</p>
+            <p>Construction Methods (Coming Soon)</p>
             {/* <span class="material-symbols-outlined">arrow_outward</span> */}
+          </li>
+          <li
+            onClick={() =>
+              window.open('https://github.com/johnlin10/', '_blank')
+            }
+          >
+            <p>Web Source Code</p>
+            <span class="material-symbols-outlined">open_in_new</span>
+          </li>
+          <li className={style.disabled}>
+            <p>Server Source Code (Coming Soon)</p>
+            <span class="material-symbols-outlined">open_in_new</span>
           </li>
         </ul>
       </div>
