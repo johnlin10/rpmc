@@ -173,7 +173,7 @@ const AboutView = () => {
           </li>
           <li
             onClick={() =>
-              window.open('https://github.com/johnlin10/', '_blank')
+              window.open('https://github.com/johnlin10/rpmc', '_blank')
             }
           >
             <p>Web Source Code</p>
